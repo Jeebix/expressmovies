@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Express Movies</title>
+	<link rel="stylesheet" href="../public/styles.css" />
+</head>
+
+<body>
+	<div class="central">
+		<% include ./partials/header %>
+			<h1>Votre recherche <em>sur The Movie Database</em></h1>
+			<div>
+				<input type="text" name="term" id="term" placeholder="titre de film">
+				<button id="btn-search">Chercher</button>
+			</div>
+
+			<div id="results"></div>
+	</div>
+	<!-- Pour inclure un partial -->
+	<% include ./partials/footer %>
+	<!-- Axios permet de faire des requêtes en retournant des promesses -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		const API_KEY = "50a8d8605edf81f7e58bd7aee10b4de5";
+		const term = document.querySelector('#term');
+		const btnSearch = document.querySelector('#btn-search');
+		
+		btnSearch.addEventListener('click', search);
+
+		let resultsDiv = document.querySelector('#results');
+
+		function search() {
+			const query = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${term.value}&language=fr-FR`;
+			// Axios permet de ne pas geler le navigateur avec la promesse
+			axios.get(query)
+			.then(function(response) {
+				console.log(response);
+				displayResults(response.data.results); // data.results = résultats requête API
+			});
+		}
+
+		function displayResults(results) {
+			resultsDiv.innerHTML = ''; // On vide la div
+			for(let result of results) { // Avec for ... in on n'aurait que les index
+				let movieDiv = document.createElement('div');
+				movieDiv.innerHTML = result.title;
+				resultsDiv.appendChild(movieDiv);
+			} 
+		}
+	</script>
+</body>
+
+</html>

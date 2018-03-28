@@ -8,11 +8,16 @@
 </head>
 
 <body>
-	<h1>Détails</h1>
-	<div>
-		<!-- Langage de templating d'EJS -->
-		<%= movieId %>
+	<div class="central">
+		<% include ./partials/header %>
+		<h1>Détails</h1>
+		<div>
+			<!-- Langage de templating d'EJS -->
+			<%= movieId %>
+		</div>
 	</div>
+	<!-- Pour inclure un partial -->
+	<% include ./partials/footer %>
 </body>
 
 </html>
