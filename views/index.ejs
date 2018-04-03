@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="utf-8" />
-		<title>Express Movies</title>
-		<link rel="stylesheet" href="../public/styles.css" />
-	</head>
-	
+	<% include ./partials/head %>
 	<body>
+		<% include ./partials/header %>
 		<div class="central">
-			<% include ./partials/header %>
 			<h1>Express Movies : le site des cinéphiles</h1>
 			<div>
 				<p>Etes-vous plutôt films ou séries ?</p>
 			</div>
 		</div>
-		<!-- Pour inclure un partial -->
-		<% include ./partials/footer %>
+		<footer>
+			<!-- Pour inclure un partial -->
+			<% include ./partials/footer %>
+		</footer>
 	</body>
 </html>

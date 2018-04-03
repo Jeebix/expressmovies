@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-	<meta charset="utf-8" />
-	<title>Express Movies</title>
-	<link rel="stylesheet" href="../public/styles.css" />
-</head>
-
-<body>
-	<div class="central">
+	<% include ./partials/head %>
+	<body>
 		<% include ./partials/header %>
-		<h1>Détails</h1>
-		<div>
-			<!-- Langage de templating d'EJS -->
-			<%= movieId %>
+		<div class="central">
+			<h1><%= movie.movietitle %></h1>
+			<div>
+				<!-- Astuce pour passer variable Node dans ejs -->
+				<form action="/movie-details/<%= movie._id %>" method="post">
+					<legend>Modifier le film</legend>
+					<label for="movietitle">Titre du film</label>
+					<input type="text" name="movietitle" id="movietitle" value="<%= movie.movietitle %>">
+					<label for="movieyear">Année du film</label>
+					<input type="text" name="movieyear" id="movieyear" value="<%= movie.movieyear %>">
+					<button type="submit">Mettre à jour</button>
+				</form>
+				<button type="button" id="btnSuppr">Suppr</button>
+			</div>
 		</div>
-	</div>
-	<!-- Pour inclure un partial -->
-	<% include ./partials/footer %>
-</body>
+		<footer>
+			<% include ./partials/footer %>
+		</footer>
+		<script>
+			var btnSuppr = document.getElementById('btnSuppr');
+			btnSuppr.addEventListener('click', deleteDocument);
 
+			function deleteDocument() {
+				// Astuce pour récupérer variable dans ejs
+				var movieId = <%- JSON.stringify(movie._id) %>;
+				var url = '/movie-details/' + movieId;
+				axios.delete(url)
+					 .then(function(response) {
+					window.location = '/movies';
+				})
+					 .catch(function(error) {
+						console.error(error);
+					});
+			}
+		</script>
+	</body>
 </html>
